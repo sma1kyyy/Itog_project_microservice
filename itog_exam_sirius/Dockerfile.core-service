@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates
+
+COPY ./bin/core-service /bin/core-service
+
+RUN chmod +x /bin/core-service
+
+EXPOSE 80
+
+CMD ["/bin/core-service"]

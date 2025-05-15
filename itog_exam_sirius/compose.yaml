@@ -1,0 +1,36 @@
+services:
+  loadbalancer:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: loadbalancer
+    ports:
+      - "8080:80"
+    networks:
+      - app_net
+    
+  core-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.core-service
+    container_name: core-service
+    restart: unless-stopped
+    networks:
+      - app_net
+    expose:
+      - "80"
+
+  user-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.user-service
+    container_name: user-service
+    restart: unless-stopped
+    networks:
+      - app_net
+    expose:
+      - "80"
+
+networks:
+  app_net:
+    driver: bridge
